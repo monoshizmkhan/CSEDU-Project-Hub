@@ -6,6 +6,12 @@ app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = set(['pdf', 'tex'])
 
+
+@app.route('/')
+def signin():
+    return render_template("something.html")
+
+
 @app.route('/feed')
 def feed():
     posts = [{"title": "Optimization methods for large-scale machine learning",
