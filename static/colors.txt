@@ -1,0 +1,2 @@
+CSEDU Blue = #161651
+CSEDU Golden/Yellow = #EBBF00
