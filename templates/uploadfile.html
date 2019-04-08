@@ -11,32 +11,13 @@
             var authors = document.getElementById("authors").value;
             var years = document.getElementById("year").value;
             var abstract = document.getElementById("abstract").value;
-            submission = {"title": title, "authors": authors, "year": years, "abstract": abstract};
-            var temp = JSON.stringify(submission);
-            $.post("/submitPaper", temp, function(){});
+            alert(title+" "+authors+" "+years+" "+abstract);
             uploadFile();
             window.location="/profile";
         }
         function uploadFile()
         {
-            var formData = new FormData();
-            var target = "/upload";
-            formData.append("file", document.getElementById("file").files[0]);
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function()
-            {
-                //alert(xhr.responseText);
-            };
-            xhr.open("POST", target, true);
-            xhr.send(formData);
-            xhr.onload = function()
-            {
-                if(this.status!=200)
-                {
-                    console.log(this.status+"\n"+this.statusText);
-                    alert(this.status+"\n"+this.statusText);
-                }
-            };
+            \\To be implemented.
         }
 
         function search()
