@@ -47,7 +47,7 @@ def profile():
             }]
     return render_template("profile.html", prof=prof, test=test)
 
-
+'''
 @app.route('/submitPaper', methods=['POST'])
 def submitPaper():
     submissionRequest = request.get_json(force=True)
@@ -63,10 +63,12 @@ def submitPaper():
 @app.route('/uploadfile')
 def uploadfilepage():
     return render_template('uploadfile.html')
+'''
+
 
 @app.route('/search')
 def searchResult():
-    searchTerm = "kuddus"
+    global searchTerm
     return render_template('searchresult.html', searchTerm=searchTerm, searchResults=searchResults)
 
 searchResults=[]
@@ -89,12 +91,13 @@ test = [{"title": "Optimization methods for large-scale machine learning",
 def getSearchQuery():
     searchRequest = request.get_json(force=True)
     searchQuery = str(searchRequest['search'])
-    print(searchQuery)
+    #print(searchQuery)
     global searchTerm
     searchTerm=searchQuery
     search(searchQuery)
     return 'OK'
 
+'''
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -111,26 +114,27 @@ def upload_file():
         filepath = str(app.root_path)+"/static/Papers/"+str(filename)
         print(str(app.root_path)+"/static/Papers/"+str(filename))
     return 'OK'
-
+'''
 
 def search(query):
     global searchResults
     searchResults.clear()
-    abc = str(query).capitalize()
+    abc = str(query).upper()
     query = abc
-    print(query)
+    #print(query)
     for i in prof:
-        print(str(i['name']).capitalize(), query)
-        if (str(i['name'])).__contains__(query) or (str(i['research'])).__contains__(query):
+        if (str(i['name']).upper()).__contains__(query) or ((str(i['research'])).upper()).__contains__(query):
             temp=i
             temp['type']='prof'
-            print(temp)
-            searchResults.append(temp)
+            #print(temp)
+            if temp not in searchResults:
+                searchResults.append(temp)
     for i in test:
-        if (str(i['title'])).__contains__(query) or (str(i['authors'])).__contains__(query):
+        if ((str(i['title'])).upper()).__contains__(query) or ((str(i['authors'])).upper()).__contains__(query):
             temp=i
             temp['type']='work'
-            searchResults.append(temp)
+            if temp not in searchResults:
+                searchResults.append(temp)
     print(searchResults)
 
 if __name__ == '__main__':
