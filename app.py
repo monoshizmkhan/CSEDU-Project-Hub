@@ -9,7 +9,7 @@ ALLOWED_EXTENSIONS = set(['pdf', 'tex'])
 
 @app.route('/')
 def signin():
-    return render_template("something.html")
+    return render_template("new.html")
 
 
 @app.route('/feed')
