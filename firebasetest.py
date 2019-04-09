@@ -40,7 +40,6 @@ user = auth.create_user(
 print('Sucessfully created new user: {0}'.format(user.uid))
 '''
 email = 'saadmahmud14@example.com'
-#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
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 '''
