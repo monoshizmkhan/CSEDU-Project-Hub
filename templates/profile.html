@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>My Profile</title>
+    <link rel="shortcut icon" href="/static/Images/dulogo.png" type="image/x-icon" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript">
         test = {{ test|tojson }}
@@ -72,7 +73,7 @@
     <div style="background: lightgrey; position: fixed; top: 18%; left: 3%; width: 94%; height: 77%; overflow: auto; box-shadow: 0 0 5px 2px #161651">
         <div>
             <p style="font-family: sans-serif; font-size: 200%; text-align: center; top: 0.5%">Profile</p>
-            <p style="position: absolute; left: 2.05%; top: -12%; font-size: 400%; white-space: pre-wrap; color: #EBBF00">______________________________________</p>
+            <p style="position: absolute; left: 10%; top: -8%; font-size: 400%; white-space: pre-wrap; color: #EBBF00">______________________________________</p>
             <img src="/static/Images/profile2.png" height="200" width="210" style="position: absolute; top: 20%; left: 2%; border: 2px solid black">
             <div style="position: absolute; left: 20%; top: 15.8%; font-family: sans-serif; font-size: 130%;">
                 <p id="name"></p>
@@ -84,7 +85,7 @@
         </div>
 
         <button style="position: absolute; top: 67.5%; left: 3%; font-family: sans-serif; font-size: 130%" onclick="window.location='/uploadfile'">Upload Paper</button>
-
+        <button style="position: absolute; top: 67.5%; left: 15%; font-family: sans-serif; font-size: 130%" onclick="window.location='/projectstatus'">Project Status</button>
         <div id="works" style="white-space: pre-line; position: absolute; top: 71%; left: 3%; font-family: sans-serif; font-size: 130%;">
             <b>Works:-</b>
 
@@ -93,11 +94,10 @@
     </div>
 
     <div style="position: fixed; top: 0%; left: 0%; width: 100%; height: 12%; background: #161651;">
-        <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/csedulogo.png" height="60" width="60" style="position:fixed; top: 0.5%; left: 0.5%"></a>
-        <a href="/feed" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU</a>
-        <a href="/feed" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 5%; top: 6%">Project Hub</a>
-        <input id="searchbar" type="text" style="position: fixed; top: 3%; right: 5%; height: 5%; width: 25%; border-radius: 2px; border: 2px solid black; font-family: Ubuntu; font-size: 105%" placeholder=" Search...">
-        <button style="background: transparent; border-color: transparent; position: absolute; top: 27%; right: 5%" onclick=search()><img src="/static/Images/search.png" height="30" width="30"></button>
+        <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/dulogo.png" height="90" width="80" style="position:fixed; top: 0.5%; left: 0.5%"></a>
+        <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU Project Hub</a>
+        <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 6%">Department of Computer Science & Engineering, University of Dhaka</a><input id="searchbar" type="text" style="position: fixed; top: 3%; right: 5%; height: 5%; width: 25%; border-radius: 2px; border: 2px solid black; font-family: Ubuntu; font-size: 105%" placeholder=" Search...">
+        <button style="background: transparent; border-color: transparent; position: absolute; top: 27%; right: 5%" onclick=search()><img src="/static/Images/srch.png" height="30" width="30"></button>
         <a href=""><img src="/static/Images/profile.png" style="position: fixed; top: 1.75%; right: 0.75%;" width="50" height="50"></a>
     </div>
 

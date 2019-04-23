@@ -29,19 +29,27 @@
         <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/dulogo.png" height="90" width="80" style="position:fixed; top: 0.5%; left: 0.5%"></a>
         <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU Project Hub</a>
         <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 6%">Department of Computer Science & Engineering, University of Dhaka</a>
-        <a style="position:fixed;height:80px;width:170px;left: 86%; background: brown;" class="btn" role="button" href="/logout"><br> LogOut </a>
+        <a style="position:fixed;height:70px;width:120px;left: 86%; background: brown;" class="btn" role="button" href="/logout"><br> LogOut </a>
+        <a href="/profile"><img src="/static/Images/profile.png" style="position: fixed; top: 2.5%; right: 16%;" width="50" height="50"></a>
     </div>
 
-    <div style="position: fixed; top: 20%; left: 32%; right: 32%;width: 50%;">
-        <h1>{{name}}, Welcome to CSEDU ProjectHub! </h1>
-        <p> CSEDU Project Hub is only for member of CSEDU Family.</p>
-        <p> In platform is used so that csedu student can share their 4th year project.</p>
+    <div style="position: fixed; top: 20%; left: 15%; right: 15%;width: 70%;">
+
+        <div class="input-group md-form form-sm form-1 pl-0">
+            <input class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+            <div class="input-group-prepend">
+                <button style="background: transparent; border: transparent"  onclick=search()><img src="/static/Images/srch.png" height="70" width="70"></button>
+            </div>
+        </div>
     </div>
-    <div style="position: fixed; top: 40%; left: 32%; right: 32%;width: 50%;">
-        <h1>New Projects: </h1>
-        <p> New Project 1</p>
-        <p> New Project 2</p>
-    </div>
+    <div style="position: fixed; top: 40%; left: 15%; right: 15%;bottom: 5%;width: 70%;height: 450px; overflow: auto; box-shadow: 0 0 5px 2px #161651;">
+        <h2><b style="padding: 30px">Latest On ProjectHub:</b></h2>
+        <ul class="list-group">
+                {% for status in statuses %}
+                    <li class="list-group-item">{% include 'statusview.html' %}</li>
+                {% endfor %}
+            </ul>
+        </div>
 
 </body>
 </html>
