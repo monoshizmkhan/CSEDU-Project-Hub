@@ -8,7 +8,12 @@
     <script type="text/javascript">
         test = {{ test|tojson }}
         prof = {{ prof|tojson }}
+        isMyProf = {{ isMyProf|tojson }}
         window.onload = function(){
+            if(isMyProf!="True"){
+                document.getElementById("uploadButton").style.visibility="hidden";
+                document.getElementById("statusButton").style.left="3%";
+            }
             loadProfile();
             loadWorks();
         }
@@ -16,16 +21,19 @@
         function loadProfile()
         {
             var name = prof.name;
-            var designation = prof.designation;
+            var session = prof.session;
             var mail = prof.mail;
             var contact = prof.contactnumber;
             var temp = "Research Areas: ";
             var research = temp.bold()+prof.research;
             document.getElementById("name").innerHTML=name;
-            document.getElementById("designation").innerHTML=designation;
+            document.getElementById("session").innerHTML=session;
             document.getElementById("mail").innerHTML=mail;
             document.getElementById("contactnumber").innerHTML=contact;
             document.getElementById("research").innerHTML=research;
+            if(prof.picture!="none"){
+                document.getElementById("profilepicture").src=prof.picture;
+            }
         }
 
         function loadWorks()
@@ -39,14 +47,22 @@
                 var output = (i+1)+". "+title+"\n"+authors+"\n"+year+"\n"+abstract+"\n";
                 var a1 = document.createElement('div');
                 a1.appendChild(document.createTextNode(output));
-                if(test[i].link!='none')
+                if(test[i].paperlink!='none')
                 {
                     var link = document.createElement('a');
-                    link.title="Download\n";
-                    var linkText = document.createTextNode("Download\n");
+                    link.title="Paper Link\n";
+                    var linkText = document.createTextNode("Paper Link\n");
                     link.appendChild(linkText);
-                    link.href = test[i].link;
-                    link.download = title+".pdf";
+                    link.href = test[i].paperlink;
+                    a1.appendChild(link);
+                }
+                if(test[i].githublink!='none')
+                {
+                    var link = document.createElement('a');
+                    link.title="Github Link\n";
+                    var linkText = document.createTextNode("Github Link\n");
+                    link.appendChild(linkText);
+                    link.href = test[i].githublink;
                     a1.appendChild(link);
                 }
                 a1.appendChild(document.createTextNode("\n"));
@@ -74,18 +90,18 @@
         <div>
             <p style="font-family: sans-serif; font-size: 200%; text-align: center; top: 0.5%">Profile</p>
             <p style="position: absolute; left: 10%; top: -8%; font-size: 400%; white-space: pre-wrap; color: #EBBF00">______________________________________</p>
-            <img src="/static/Images/profile2.png" height="200" width="210" style="position: absolute; top: 20%; left: 2%; border: 2px solid black">
+            <img src="/static/Images/profile2.png" id="profilepicture" height="200" width="210" style="position: absolute; top: 20%; left: 2%; border: 2px solid black">
             <div style="position: absolute; left: 20%; top: 15.8%; font-family: sans-serif; font-size: 130%;">
                 <p id="name"></p>
-                <p id="designation"></p>
+                <p id="session"></p>
                 <p id="mail" style="color: blue;"><u></u></p>
                 <p id="contactnumber"></p>
                 <p id="research"></p>
             </div>
         </div>
 
-        <button style="position: absolute; top: 67.5%; left: 3%; font-family: sans-serif; font-size: 130%" onclick="window.location='/uploadfile'">Upload Paper</button>
-        <button style="position: absolute; top: 67.5%; left: 15%; font-family: sans-serif; font-size: 130%" onclick="window.location='/projectstatus'">Project Status</button>
+        <button style="position: absolute; top: 67.5%; left: 3%; font-family: sans-serif; font-size: 130%" onclick="window.location='/uploadfile'" id="uploadButton">Upload Paper</button>
+        <button style="position: absolute; top: 67.5%; left: 15%; font-family: sans-serif; font-size: 130%" onclick="window.location='/projectstatus'" id="statusButton">Project Status</button>
         <div id="works" style="white-space: pre-line; position: absolute; top: 71%; left: 3%; font-family: sans-serif; font-size: 130%;">
             <b>Works:-</b>
 

@@ -11,15 +11,31 @@
             var authors = document.getElementById("authors").value;
             var years = document.getElementById("year").value;
             var abstract = document.getElementById("abstract").value;
-            alert(title+" "+authors+" "+years+" "+abstract);
-            uploadFile();
+            var paperlink = document.getElementById("paperlink").value;
+            var githublink =  document.getElementById("githublink").value;
+            if(title==""){
+                alert("Title field must not be empty");
+                return;
+            }
+            if(authors==""){
+                alert("Authors field must not be empty");
+                return;
+            }
+            if(years==""){
+                alert("Years field must not be empty");
+                return;
+            }
+            if(abstract==""){
+                alert("Abstract field must not be empty");
+                return;
+            }
+            if(paperlink=="")paperlink="none";
+            if(githublink=="")githublink="none";
+            uploadInfo = {"title": title, "authors": authors, "years": years, "abstract": abstract, "paperlink": paperlink, "githublink": githublink};
+            var temp = JSON.stringify(uploadInfo);
+            $.post("/upload", temp, function(){});
             window.location="/profile";
         }
-        function uploadFile()
-        {
-            //To be implemented.
-        }
-
         function search()
         {
             var query="";
@@ -38,14 +54,15 @@
 <body>
     <div style="background: lightgrey; position: fixed; top: 18%; left: 3%; width: 94%; height: 77%; overflow: auto; box-shadow: 0 0 5px 2px #161651; font-family: sans-serif;">
         <p style="font-family: sans-serif; font-size: 200%; text-align: center; top: 0.5%">Upload File</p>
-        <p style="position: absolute; left: 10%; top: -8%; font-size: 400%; white-space: pre-wrap; color: #EBBF00">__________________________________</p>
+        <p style="position: absolute; left: 2%; top: -14%; font-size: 400%; white-space: pre-wrap; color: #EBBF00">__________________________________</p>
         <div style="position: absolute; left: 2.05%; font-family: sans-serif; font-size: 130%; text-align: center">
             <input type="text" placeholder="Title" id="title" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%" required="required"><br><br>
             <input type="text" placeholder="Authors" id="authors" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%" required="required"><br><br>
-            <input type="text" placeholder="Year" id="year" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%" required="required"><br><br>
+            <input type="number" placeholder="Year" id="year" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%; width: 98%" min="2010" max="2020" required="required"><br><br>
             <input type="text" placeholder="Abstract" id="abstract" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%" required="required"><br><br>
-            <input type="file" id="file" name="file" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%; position: absolute; left: 0%"  required="required">
-            <input type="button" id="finalize"style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%; position: absolute; left: 0%; top: 120%;" value="Upload" onclick="upload()">
+            <input type="text" placeholder="Paper Link" id="paperlink" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%" ><br><br>
+            <input type="text" placeholder="Github Link" id="githublink" style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%" ><br><br>
+            <input type="button" id="finalize"style="font-family: sans-serif; font-size: 110%; padding-bottom: 1%; position: absolute; left: 0%; top: 100%;" value="Upload" onclick="upload()">
         </div>
     </div>
 
