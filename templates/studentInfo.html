@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Info</title>
+    <link rel="shortcut icon" href="/static/Images/dulogo.png" type="image/x-icon" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function(){
+            updateSelections();
+        };
+
+
+        function updateSelections()
+        {
+            var select = document.getElementById("sessions");
+            for(var sess=2005;sess<=2016;sess++)
+            {
+                var opt = document.createElement('option');
+				opt.value=sess+"/"+(sess+1);
+				opt.innerHTML=sess+"/"+(sess+1);
+				select.appendChild(opt);
+            }
+        }
+
+        function search()
+        {
+            var query="";
+            if(document.getElementById("searchbar").value=="")alert("Please enter text before searching.");
+            else
+            {
+                query = document.getElementById("searchbar").value;
+                searchQuery = {"search": query};
+                var temp = JSON.stringify(searchQuery);
+                $.post("/searchHandler", temp, function(){});
+                window.location="/search";
+            }
+        }
+
+        function loadSessions(val)
+        {
+            window.location = "/sessions?GET="+val;
+        }
+
+    </script>
+</head>
+<body>
+    <div style="background: lightgrey; position: fixed; top: 18%; left: 3%; width: 94%; height: 77%; overflow: auto; box-shadow: 0 0 5px 2px #161651">
+        <select style="position: relative; left: 42%; font-size: 150%; top: 5%; background-color: white" id="sessions" onchange="loadSessions(this.value)">
+            <option value="default" disabled selected>Select session</option>
+        </select>
+        <div id="names" style="position: relative; top: 20%; left: 5%">
+        </div>
+    </div>
+
+    <div style="position: fixed; top: 0%; left: 0%; width: 100%; height: 12%; background: #161651;">
+        <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/dulogo.png" height="90" width="80" style="position:fixed; top: 0.5%; left: 0.5%"></a>
+        <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU Project Hub</a>
+        <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 6%">Department of Computer Science & Engineering, University of Dhaka</a><input id="searchbar" type="text" style="position: fixed; top: 3%; right: 5%; height: 5%; width: 25%; border-radius: 2px; border: 2px solid black; font-family: Ubuntu; font-size: 105%" placeholder=" Search...">
+        <button style="background: transparent; border-color: transparent; position: absolute; top: 27%; right: 5%" onclick=search()><img src="/static/Images/srch.png" height="30" width="30"></button>
+        <a href="/profile"><img src="/static/Images/profile.png" style="position: fixed; top: 1.75%; right: 0.75%;" width="50" height="50"></a>
+        <a href="" style="position: fixed; font-family: sans-serif; font-size: 120%; color: white; text-decoration: none; left: 65%; top: 6%"">Sessions</a>
+    </div>
+
+</body>
+</html>
