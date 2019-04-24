@@ -142,6 +142,11 @@ def submitPaper():
     return 'OK'
 
 
+@APP_MAIN.route('/sessions')
+def sessionsPage()
+    return render_template('studentInfo.html')
+
+
 @APP_MAIN.route('/search')
 def searchResult():
     global searchTerm

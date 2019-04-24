@@ -108,6 +108,12 @@ def getSearchQuery():
     search(searchQuery)
     return 'OK'
 
+
+@app.route('/sessions')
+def sessionsPage():
+    return render_template('studentInfo.html')
+
+
 '''
 def allowed_file(filename):
     return '.' in filename and \
