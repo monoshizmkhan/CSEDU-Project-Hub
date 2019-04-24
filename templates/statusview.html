@@ -2,10 +2,10 @@
 
     <div class="card-header" >
         <div>
-                <img align="left" class="rounded-circle" alt="100x100" src="/static/Images/profile1.jpg"
+                <img align="left" class="rounded-circle" alt="100x100" src={{ status.pic }}
                 data-holder-rendered="true" height="60px">
 
-                <h5 style="padding-top: 20px ;" ><b>&ensp; Natasha Chakraborty</b></h5>
+                <a href="#"><h5 style="padding-top: 20px ;" ><b>&ensp; {{ status.name }}</b></h5><a>
 
         </div>
     </div>
@@ -14,7 +14,7 @@
 
       <p class="card-text">
 
-      {{ status.text }}
+      <b><h5>{{ status.text }}<h5><b>
 
       </p>
       <h5 align="right">Date : {{ status.date }} </h5>

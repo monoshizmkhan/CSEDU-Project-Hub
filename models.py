@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 from cseduprojecthub import APPLOGIN
 
 class User(UserMixin,object):
@@ -9,7 +9,8 @@ class User(UserMixin,object):
 
 @APPLOGIN.user_loader
 def load_user(username):
-    return User(id)
+    print(username)
+    return User(username)
 
 
 

@@ -1,17 +1,25 @@
 from cseduprojecthub import APP_MAIN, APPLOGIN,Auth,DB
-from flask import render_template, flash,redirect,url_for,abort
+from flask import render_template, flash,redirect,url_for
 from flask_login import current_user, login_user, logout_user , login_required
 from flask import request
-from models import User
+from models import User,load_user
 from firebase_admin import auth
 from werkzeug.urls import url_parse
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 import json
+from loadDB import load
 
 @APP_MAIN.route('/')
 def landingPage():
+    if current_user.is_authenticated:
+        return redirect(url_for('FeedPage'))
     return render_template('landingPage.html', title='Home')
+
+@APP_MAIN.route('/t')
+def loaddatatodb():
+    load()
+    return 'asd'
 
 
 @APP_MAIN.route('/login',methods=['GET', 'POST'])
@@ -26,11 +34,16 @@ def login():
         try:
             Auth.sign_in_with_email_and_password(email, password)
             c = Auth.get_account_info(Auth.current_user['idToken'])['users'][0]['emailVerified']
+            '''
             if(c == False):
                     return json.dumps({'status': 'You must verify email before login.'})
+            '''
+            print(Auth.current_user)
             login_user(User(Auth.current_user), remember=True)
+
             return json.dumps({'status': 'success'})
         except Exception as e:
+            print(str(e))
             return json.dumps({'status': 'Something went wrong! Try again.'})
     return render_template('login.html', title='Login')
 
@@ -76,20 +89,62 @@ def uploadfilepage():
 @APP_MAIN.route('/feed')
 @login_required
 def FeedPage():
-    statuses = [status() for i in range(10)]
-    return render_template('feed.html', title='Feed', name = "Saad", statuses = statuses)
+    p = current_user.get_id()
+    p = p.split("'email': '")[1].split("',")[0].split('@')[0]
+    statuses = DB.child('Status').get().val()
+    statid = [k for k,v in statuses.items()]
+    statuses = [v for k,v in statuses.items()]
+    print(statuses)
+    a = DB.child('Users').child(p).child('Picture').get().val()
+    b = DB.child('Users').child(p).child('Name').get().val()
+    payload = []
+    for i in range(len(statuses)):
+        print('id',statid[i])
+        pi = DB.child('Users').child(statid[i]).child('Picture').get().val()
+        print("pi",pi)
+        for k,v in statuses[i].items():
+            payload.append(status(v['Date'], v['Name'], v['Text'],str(pi)))
+    payload.reverse()
+    print(statuses)
+    return render_template('feed.html', title='Feed', pic = a, name = b,id = p, statuses = payload)
 
 class status(object):
 
-    def __init__(self,):
-        self.date = datetime.today()
-        self.text = "This is a test."
+    def __init__(self,date, name,text,pic):
+        self.date = date
+        self.name = name
+        self.text = text
+        self.pic = pic
 
 @APP_MAIN.route('/projectstatus')
 @login_required
 def StatusPage():
-    statuses = [status() for i in range(10)]
-    return render_template('projectstatus.html', title='Feed', name = "Saad", statuses = statuses)
+    p = current_user.get_id()
+    p = p.split("'email': '")[1].split("',")[0].split('@')[0]
+    statuses = DB.child('Status').child(p).get().val()
+    a = DB.child('Users').child(p).child('Picture').get().val()
+    b = DB.child('Users').child(p).child('Name').get().val()
+    if(statuses is not None):
+        statuses = [status(v['Date'], v['Name'], v['Text'], a) for k, v in statuses.items()]
+    else:
+        statuses = []
+    print(a)
+    statuses.reverse()
+    return render_template('projectstatus.html', title='Feed', pic = a, name = b,id = p, statuses = statuses)
+
+@APP_MAIN.route('/ustatus', methods=['POST'])
+@login_required
+def Ustatus():
+    name = request.form['name']
+    id = str(request.form['id'])
+    text = str(request.form['text'])
+    date = str(datetime.today().date())
+    print(id,text,date)
+    DB.child('Status').child(id).push({'Date': date, 'Name': name,
+                                      'Text': text})
+    print('here')
+    return json.dumps({'status': 'success'})
+
 
 @APP_MAIN.route('/logout')
 def logout():
@@ -97,36 +152,35 @@ def logout():
     return redirect(url_for('login'))
 
 
-@APP_MAIN.route('/profile')
-def profile():
-    prof = {"name": "Nabil Hasan",
-            "session": "2014/2015",
-            "mail": "nabilhasan@gmail.com",
-            "contactnumber": "123123123123123",
-            "research": "Natural Language Processing, Machine Learning, Artificial Intelligence",
-            "picture": "none"}
-    test = [{"title": "Optimization methods for large-scale machine learning",
-             "authors": "L Bottou, FE Curtis, J Nocedal",
-             "year": "2018",
-             "abstract": "This paper provides a review and commentary on the past, present, and future of numerical optimization algorithms in the context of machine learning applications. Through case studies on text classification and the training of deep neural networks, we discuss how optimization problems arise in machine learning and what makes them challenging. A major theme of our study is that large-scale machine learning represents a distinctive setting in which the stochastic gradient (SG) method has traditionally played a central role while conventional gradient-based nonlinear optimization techniques typically falter. Based on this viewpoint, we present a comprehensive theory of a straightforward, yet versatile SG algorithm, discuss its practical behavior, and highlight opportunities for designing algorithms with improved performance. This leads to a discussion about the next generation of optimization methods for large-scale machine learning, including an investigation of two main streams of research on techniques that diminish noise in the stochastic directions and methods that make use of second-order derivative approximations.",
-             "paperlink": "none",
-             "githublink": "none"},
-            {"title": "Understanding overlay signatures using machine learning on non-lithography context information",
-             "authors": "M Overcast, C Mellegaard, D Daniel et al",
-             "year": "2018",
-             "abstract": "Overlay errors between two layers can be caused by non-lithography processes. While these errors can be compensated by the run-to-run system, such process and tool signatures are not always stable. In order to monitor the impact of non-lithography context on overlay at regular intervals, a systematic approach is needed. Using various machine learning techniques, significant context parameters that relate to deviating overlay signatures are automatically identified. Once the most influential context parameters are found, a run-to-run simulation is performed to see how much improvement can be obtained. The resulting analysis shows good potential for reducing the influence of hidden context parameters on overlay performance. Non-lithographic contexts are significant contributors, and their automatic detection and classification will enable the overlay roadmap, given the corresponding control capabilities.",
-             "paperlink": "none",
-             "githublink": "none"},
-            {
-                "title": "Abstractive Text Summarization using Sequence-to-sequence RNNs and Beyond",
-                "authors": "Ramesh Nallapati et al",
-                "year": "2016",
-                "abstract": "In this work, we model abstractive text summarization using Attentional Encoder- Decoder Recurrent Neural Networks, and show that they achieve state-of-the-art performance on two different corpora. We propose several novel models that address critical problems in summarization that are not adequately modeled by the basic architecture, such as modeling key-words, capturing the hierarchy of sentence-to- word structure, and emitting words that are rare or unseen at training time. Our work shows that many of our proposed models contribute to further improvement in performance. We also propose a new dataset consisting of multi-sentence sum- maries, and establish performance bench- marks for further research.",
-                "paperlink": "static/Papers/Abstractive Text Summarization using Sequence-to-sequence RNNs and Beyond.pdf",
-                "githublink": "none"
-            }]
-    isMyProf="True"
-    return render_template("profile.html", prof=prof, test=test, isMyProf=isMyProf)
+@APP_MAIN.route('/profile/',defaults={'id': '#'})
+@APP_MAIN.route('/profile/<string:id>')
+@login_required
+def profile(id):
+    if (id == '#'):
+        return render_template('404.html')
+    print(id)
+    p = DB.child('Projects').get().val()
+    test = []
+    for k,v in p.items():
+        #print(v)
+        test.append(v)
+    p = current_user.get_id()
+    p = p.split("'email': '")[1].split("',")[0].split('@')[0]
+    print("here",p)
+    isMyProf = "True"
+    if(p != id):
+        isMyProf = 'False'
+    pic = DB.child('Users').child(p).child('Picture').get().val()
+    a = DB.child('Users').child(id).get().val()
+    prof = {"Name": "Nabil Hasan",
+            "Session": "2014/2015",
+            "Mail": "nabilhasan@gmail.com",
+            "Contact": "123123123123123",
+            "Research": "Natural Language Processing, Machine Learning, Artificial Intelligence",
+            "Picture": "none"}
+
+
+    return render_template("profile.html", pic = pic,prof=a, test=test, isMyProf=isMyProf)
 
 @APP_MAIN.route('/upload', methods=['POST'])
 def submitPaper():
@@ -143,7 +197,7 @@ def submitPaper():
 
 
 @APP_MAIN.route('/sessions')
-def sessionsPage()
+def sessionsPage():
     return render_template('studentInfo.html')
 
 
