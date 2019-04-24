@@ -196,7 +196,11 @@ def submitPaper():
     abstract = str(submissionRequest['abstract'])
     paperlink = str(submissionRequest['paperlink'])
     githublink = str(submissionRequest['githublink'])
-    addToDB = {"title": title, "authors": authors, "year": year, "abstract": abstract, "paperlink": paperlink, "githublink": githublink}
+    if paperlink=="":
+        paperlink="none"
+    if githublink=="":
+        githublink="none"
+    addToDB = {"projectName": title, "author": authors, "year": year, "projectDescroption": abstract, "paperLink": paperlink, "githubLink": githublink}
     print(addToDB)
     return 'OK'
 
