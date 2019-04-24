@@ -62,7 +62,8 @@
             <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/dulogo.png" height="90" width="80" style="position:fixed; top: 0.5%; left: 0.5%"></a>
             <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU Project Hub</a>
             <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 6%">Department of Computer Science & Engineering, University of Dhaka</a>
-            <a href="/profile"><img src={{ pic }} style = "position: fixed; top: 1.75%; right: 10%;"
+            <a style="position:fixed;height:70px;width:120px;left: 92%; top: 1.5%;" name="logout"   href="/logout"><img src="/static/Images/logout.png" width="65" height="65"></a>
+            <a href="/profile/{{ id }}"><img src={{ pic }} style = "position: fixed; top: 1.75%; right: 10%;"
                 width="75" height="75"></a>
         </div>
 
@@ -78,7 +79,7 @@
             </div>
         </div>
 
-
+        {% if statuses %}
         <div style="position: fixed; top: 44%; left: 15%; right: 15%;bottom: 5%;width: 70%;height: 420px; overflow: auto; box-shadow: 0 0 5px 2px #161651;">
             <ul class="list-group">
                 {% for status in statuses %}
@@ -86,6 +87,7 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
 
         <div style="position: fixed; top: 90%">
             <p> --- </p>

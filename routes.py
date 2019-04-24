@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash
 from datetime import datetime
 import json
 from loadDB import load
-
+import random
 @APP_MAIN.route('/')
 def landingPage():
     if current_user.is_authenticated:
@@ -83,7 +83,11 @@ def fpv():
 
 @APP_MAIN.route('/uploadfile')
 def uploadfilepage():
-    return render_template('uploadfile.html')
+    p = current_user.get_id()
+    p = p.split("'email': '")[1].split("',")[0].split('@')[0]
+    a = DB.child('Users').child(p).child('Picture').get().val()
+
+    return render_template('uploadfile.html',pic = a,id = p)
 
 
 @APP_MAIN.route('/feed')
@@ -105,6 +109,7 @@ def FeedPage():
         for k,v in statuses[i].items():
             payload.append(status(v['Date'], v['Name'], v['Text'],str(pi)))
     payload.reverse()
+    random.shuffle(payload)
     print(statuses)
     return render_template('feed.html', title='Feed', pic = a, name = b,id = p, statuses = payload)
 
@@ -204,7 +209,11 @@ def sessionsPage():
 @APP_MAIN.route('/search')
 def searchResult():
     global searchTerm
-    return render_template('searchresult.html', searchTerm=searchTerm, searchResults=searchResults)
+    p = current_user.get_id()
+    p = p.split("'email': '")[1].split("',")[0].split('@')[0]
+    a = DB.child('Users').child(p).child('Picture').get().val()
+
+    return render_template('searchresult.html', searchTerm=searchTerm,pic = a,id=p, searchResults=searchResults)
 
 searchResults=[]
 searchTerm = ""
@@ -224,32 +233,18 @@ def search(query):
     searchResults.clear()
     abc = str(query).upper()
     query = abc
+    p = DB.child('Projects').get().val()
+    projects = []
+    print(p)
+    for k, v in p.items():
+        print(k,v)
+        projects.append(v)
+    print('pro',projects)
     #projects naam er list of dictionaries, should contain a dictionary each for a project
     for i in projects:
         if ((str(i['projectName'])).upper()).__contains__(query) or ((str(i['author'])).upper()).__contains__(query):
             temp=i
             if temp not in searchResults:
                 searchResults.append(temp)
-    print(searchResults)
+    print('sear',searchResults)
 
-'''
-<!--
-              {% for status in statuses %}
-                    {% if loop.index == 0 %}
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="/static/Images/images.jpeg" alt="First slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                {% include 'statusview.html' %}
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="/static/Images/images.jpeg" alt="Other slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                {% include 'statusview.html' %}
-                            </div>
-                        </div>
-                    {% endif %}
-              {% endfor %}
-              -->
-'''
