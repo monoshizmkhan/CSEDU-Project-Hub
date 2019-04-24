@@ -29,20 +29,21 @@
             <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/dulogo.png" height="90" width="80" style="position:fixed; top: 0.5%; left: 0.5%"></a>
             <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU Project Hub</a>
             <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 6%">Department of Computer Science & Engineering, University of Dhaka</a>
+            <a href="/profile"><img src="/static/Images/profile1.jpg" style="position: fixed; top: 1.75%; right: 0.75%;" width="65" height="65"></a>
         </div>
 
-        <div style="position: fixed; top: 20%; left: 15%; right: 15%;width: 70%;">
+        <div style="position: fixed; top: 15%; left: 15%; right: 15%;width: 70%;">
             <div class="form-group shadow-textarea">
                 <h3><b>What are you working on these days?</b></h3>
                 <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
-            </div>
-            <div style="position: fixed; top: 38%; left: 72%; right: 15%;width: 70%;">
-                <button style="height:80px;width:170px; background: #161651;" class="btn" role="button">Update</button>
+                <div align="right">
+                    <button style="height:80px;width:170px; background: #161651;" class="btn" role="button">Update</button>
+                </div>
             </div>
         </div>
 
 
-        <div style="position: fixed; top: 50%; left: 15%; right: 15%;bottom: 5%;width: 70%;height: 350px; overflow: auto; box-shadow: 0 0 5px 2px #161651;">
+        <div style="position: fixed; top: 44%; left: 15%; right: 15%;bottom: 5%;width: 70%;height: 420px; overflow: auto; box-shadow: 0 0 5px 2px #161651;">
             <ul class="list-group">
                 {% for status in statuses %}
                     <li class="list-group-item">{% include 'statusview.html' %}</li>

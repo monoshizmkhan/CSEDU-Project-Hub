@@ -125,7 +125,7 @@ def profile():
                 "paperlink": "static/Papers/Abstractive Text Summarization using Sequence-to-sequence RNNs and Beyond.pdf",
                 "githublink": "none"
             }]
-    isMyProf="False"
+    isMyProf="True"
     return render_template("profile.html", prof=prof, test=test, isMyProf=isMyProf)
 
 @APP_MAIN.route('/upload', methods=['POST'])

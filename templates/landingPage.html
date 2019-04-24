@@ -20,25 +20,106 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.13/js/mdb.min.js"></script>
 
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+.mySlides {display:none;}
+</style>
 
 </head>
-<body>
+<body style="background: black">
     <div style="position: fixed; top: 0%; left: 0%; width: 100%; height: 12%; background: #161651;">
         <a href="http://www.cse.du.ac.bd/"><img alt="Department of Computer Science and Engineering, University of Dhaka" src="/static/Images/dulogo.png" height="90" width="80" style="position:fixed; top: 0.5%; left: 0.5%"></a>
         <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 1.5%">CSEDU Project Hub</a>
         <a href="/" style="position: fixed; font-family: sans-serif; font-size: 160%; color: white; text-decoration: none; left: 6.5%; top: 6%">Department of Computer Science & Engineering, University of Dhaka</a>
+        <a style="position:fixed;height:70px;width:120px;left: 86%; top: 1.5%;" name="logout"   href="/login">
+            <img src="/static/Images/login.png" width="65" height="65">
+        </a>
+    </div>
+    <div class="card text-white bg-success mb-3 text-center"
+         style="position:fixed;top: 12%;width: 23%; height: 37%">
+        <div class="card-body">
+            <blockquote class="card-blockquote">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer>Someone famous in
+                    <cite title="Source Title">Source Title</cite>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+    <div class="card text-white bg-primary mb-3 text-center"
+         style="position:fixed;top: 49%;width: 23% ; height: 38%">
+        <div class="card-body">
+            <blockquote class="card-blockquote">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer>Someone famous in
+                    <cite title="Source Title">Source Title</cite>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+    <div class="card text-white bg-primary mb-3 text-center"
+         style="position:fixed;top: 12%;width: 23%; height: 37%; right: 0.1%">
+        <div class="card-body">
+            <blockquote class="card-blockquote">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer>Someone famous in
+                    <cite title="Source Title">Source Title</cite>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+    <div class="card text-white bg-success mb-3 text-center"
+         style="position:fixed;top: 49%;width: 23% ; height: 38%;right: 0.1%">
+        <div class="card-body">
+            <blockquote class="card-blockquote">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer>Someone famous in
+                    <cite title="Source Title">Source Title</cite>
+                </footer>
+            </blockquote>
+        </div>
+    </div>
+    <div style="position: fixed; top: 10%;left: 1.5% ;width: 100%">
+
+        <div class="w3-content w3-section" >
+            <img class="mySlides" src="/static/Images/6.jpg" height="400px" width="94.5%">
+            <img class="mySlides" src="/static/Images/7.jpg" height="400px" width="94.5%">
+            <img class="mySlides" src="/static/Images/6.jpg" height="400px" width="94.5%">
+        </div>
+    </div>
+    <div class="card text-white bg-danger mb-3 text-center"
+         style="position:fixed;top: 60%;width: 54% ; height: 38%;left: 23%">
+        <div class="card-body">
+            <blockquote class="card-blockquote">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer>Someone famous in
+                    <cite title="Source Title">Source Title</cite>
+                </footer>
+            </blockquote>
+        </div>
     </div>
 
-    <div style="position: fixed; top: 20%; left: 32%; right: 32%;width: 50%;">
-        <h1>Welcome to CSEDU ProjectHub </h1>
-        <p> CSEDU Project Hub is only for member of CSEDU Family.</p>
-        <p> In platform is used so that csedu student can share their 4th year project.</p>
-        <p> In order to view the content please register and login.</p>
-    </div>
-    <div style="position: fixed; top: 45%; left: 35%; right: 32%;width: 50%;">
-        <a style="height:80px;width:170px; background: #161651;" class="btn" role="button" href="/login"><br> Login </a>
-        <a style="height:80px;width:170px; background: #161651;" class="btn" role="button" href="/register"><br> Register </a>
+    <div style="position: fixed; top: 87%;width: 100%;height: 1%; background: #EBBF00;"></div>
+    <div style="position: fixed; top: 88%;width: 100%;height: 12%; background: #161651;">
+        <div style="position: fixed; top: 91%; left: 35%; right: 32%;width: 50%;">
+            <h1 style="color: white">Welcome to CSEDU ProjectHub </h1>
+        </div>
     </div>
 </body>
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
 </html>
