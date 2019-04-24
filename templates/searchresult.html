@@ -16,40 +16,45 @@
         function load()
         {
             var i=0;
-            if(searchResults.length<=0)
+            if(searchResults.length>=0)
+            {
+                for(i=0;i<searchResults.length;i++)
+                {   
+                    var work = searchResults[i];
+                    var title = work.projectName;
+                    var authors = work.authors;
+                    var year = work.year;
+                    var abstract = work.projectDescroption;
+                    var output = (i+1)+". "+title+"\n"+authors+"\n"+year+"\n"+abstract+"\n";
+                    var a1 = document.createElement('div');
+                    a1.appendChild(document.createTextNode(output));
+                    if(work.paperLink!='none')
+                    {
+                        var link = document.createElement('a');
+                        link.title="Paper Link\n";
+                        var linkText = document.createTextNode("Paper Link\n");
+                        link.appendChild(linkText);
+                        link.href = work.paperLink;
+                        a1.appendChild(link);
+                    }
+                    if(work.githubLink!='none')
+                    {
+                        var link = document.createElement('a');
+                        link.title="Github Link\n";
+                        var linkText = document.createTextNode("Github Link\n");
+                        link.appendChild(linkText);
+                        link.href = work.githubLink;
+                        a1.appendChild(link);
+                    }
+                    a1.appendChild(document.createTextNode("\n"));
+                    document.getElementById("results").appendChild(a1);
+                }
+                return;
+            }
+            else
             {
                 document.getElementById("results").appendChild(document.createTextNode("No Matching Results"));
-            }
-            for(i=0;i<searchResults.length;i++)
-            {   
-                var work = searchResults[i];
-                var title = work.projectName;
-                var authors = work.authors;
-                var year = work.year;
-                var abstract = work.projectDescroption;
-                var output = (i+1)+". "+title+"\n"+authors+"\n"+year+"\n"+abstract+"\n";
-                var a1 = document.createElement('div');
-                a1.appendChild(document.createTextNode(output));
-                if(work.paperLink!='none')
-                {
-                    var link = document.createElement('a');
-                    link.title="Paper Link\n";
-                    var linkText = document.createTextNode("Paper Link\n");
-                    link.appendChild(linkText);
-                    link.href = work.paperLink;
-                    a1.appendChild(link);
-                }
-                if(work.githubLink!='none')
-                {
-                    var link = document.createElement('a');
-                    link.title="Github Link\n";
-                    var linkText = document.createTextNode("Github Link\n");
-                    link.appendChild(linkText);
-                    link.href = work.githubLink;
-                    a1.appendChild(link);
-                }
-                a1.appendChild(document.createTextNode("\n"));
-                document.getElementById("results").appendChild(a1);
+                return;
             }
         }
 
