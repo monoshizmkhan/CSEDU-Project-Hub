@@ -16,30 +16,40 @@
         function load()
         {
             var i=0;
-            for(i=0;i<searchResults.length;i++)
+            if(searchResults.length<=0)
             {
-                if(searchResults[i].type=="prof")
+                document.getElementById("results").appendChild(document.createTextNode("No Matching Results"));
+            }
+            for(i=0;i<searchResults.length;i++)
+            {   
+                var work = searchResults[i];
+                var title = work.projectName;
+                var authors = work.authors;
+                var year = work.year;
+                var abstract = work.projectDescroption;
+                var output = (i+1)+". "+title+"\n"+authors+"\n"+year+"\n"+abstract+"\n";
+                var a1 = document.createElement('div');
+                a1.appendChild(document.createTextNode(output));
+                if(work.paperLink!='none')
                 {
-                    var prof = searchResults[i];
-                    var name = prof.name;
-                    var designation = prof.designation;
-                    var mail = prof.mail;
-                    var contact = prof.contactnumber;
-                    var temp = "Research Areas: ";
-                    var research = temp+prof.research;
-                    var result = (i+1)+". Type: Instructor\nName: "+name+"\nDesignation: "+designation+"\nMail Address: "+mail+"\nContact Number: "+contact+"\n"+research+"\n\n"
-                    document.getElementById("results").appendChild(document.createTextNode(result));
+                    var link = document.createElement('a');
+                    link.title="Paper Link\n";
+                    var linkText = document.createTextNode("Paper Link\n");
+                    link.appendChild(linkText);
+                    link.href = work.paperLink;
+                    a1.appendChild(link);
                 }
-                else
+                if(work.githubLink!='none')
                 {
-                    var work = searchResults[i];
-                    var title = work.title;
-                    var authors = work.authors;
-                    var year = work.year;
-                    var abstract = work.abstract;
-                    var result = (i+1)+". Type: Work\nTitle: "+title+"\nAuthors: "+authors+"\nYear: "+year+"\nAbstract:\n"+abstract+"\n\n"
-                    document.getElementById("results").appendChild(document.createTextNode(result));
+                    var link = document.createElement('a');
+                    link.title="Github Link\n";
+                    var linkText = document.createTextNode("Github Link\n");
+                    link.appendChild(linkText);
+                    link.href = work.githubLink;
+                    a1.appendChild(link);
                 }
+                a1.appendChild(document.createTextNode("\n"));
+                document.getElementById("results").appendChild(a1);
             }
         }
 
