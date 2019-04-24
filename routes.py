@@ -201,7 +201,13 @@ def submitPaper():
     if githublink=="":
         githublink="none"
     addToDB = {"projectName": title, "author": authors, "year": year, "projectDescroption": abstract, "paperLink": paperlink, "githubLink": githublink}
-    print(addToDB)
+
+    p = current_user.get_id()
+    p = p.split("'email': '")[1].split("',")[0].split('@')[0]
+    name = DB.child('Users').child(p).child('Name').get().val()
+    DB.child('Status').child(p).push({'Date': str(datetime.today().date()), 'Name': name,
+                                       'Text': 'I have just uploaded a project titled: '+title +
+                                               '.\n Visite my profile for more details.'})
     return 'OK'
 
 
